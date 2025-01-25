@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Visualization</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thêm Chart.js -->
+    <style>
+        #graph {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Graph Visualization</h1>
+    <canvas id="graph" width="600" height="400"></canvas>
+
+    <script>
+        // Hàm tạo biểu đồ đường mẫu mặc định
+        function createDefaultLineChart() {
+            const ctx = document.getElementById('graph').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], // Các tháng trong năm
+                    datasets: [{
+                        label: 'Sample Data',
+                        data: [10, 15, 9, 12, 8, 14, 18], // Giá trị cho mỗi tháng
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Hàm tải dữ liệu đồ thị từ backend
+        function loadGraphData() {
+            fetch('/api/graph')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.labels && data.values) {
+                        // Nếu có dữ liệu hợp lệ, tạo biểu đồ từ dữ liệu backend
+                        const ctx = document.getElementById('graph').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: data.labels,  // Nhãn từ dữ liệu backend
+                                datasets: [{
+                                    label: 'Graph Data',
+                                    data: data.values,  // Dữ liệu giá trị từ backend
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    fill: false,
+                                    tension: 0.4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        // Nếu không có dữ liệu hợp lệ, tạo biểu đồ đường mặc định
+                        createDefaultLineChart();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading graph data:', error);
+                    // Nếu có lỗi, tạo biểu đồ đường mặc định
+                    createDefaultLineChart();
+                });
+        }
+
+        // Tải dữ liệu đồ thị khi trang được tải
+        window.onload = loadGraphData;
+    </script>
+</body>
+</html>

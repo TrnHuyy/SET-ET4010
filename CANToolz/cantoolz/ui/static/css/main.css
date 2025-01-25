@@ -1,0 +1,47 @@
+.scenario {
+  position: relative;
+}
+
+.step {
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.step.current {
+  background-color: lightsteelblue;
+}
+
+.logo {
+  height: auto;
+  max-width: 30%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-group-addon:first-child:last-child {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.command-run {
+    border: 2 none;
+    background-color: rgb(233,233,226);
+    font-weight: 10;
+    font-size: 1;
+}
+
+.graph-button {
+  display: inline-block;
+  font-size: 18px; /* Kích thước chữ lớn hơn */
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: #28a745; /* Màu xanh lá */
+  border: 1px solid #28a745; /* Viền cùng màu */
+  padding: 10px 20px; /* Kích thước padding */
+  border-radius: 5px; /* Bo góc */
+  color: #fff; /* Màu chữ trắng */
+  cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
+}

@@ -1,0 +1,18 @@
+language: python
+python:
+    - "3.3"
+    - "3.4"
+    - "3.5"
+    - "3.6"
+
+install:
+    - pip install pyserial numpy bitstring mido coverage flake8
+
+before_script:
+    - flake8 --exit-zero cantoolz
+
+script:
+    - nosetests -v -d --cover-erase --with-coverage --cover-package=cantoolz
+
+notifications:
+    email: false
